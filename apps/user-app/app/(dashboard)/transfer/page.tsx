@@ -4,12 +4,19 @@ import { BalanceCard } from "../../../components/BalanceCard";
 import { OnRampTransactions } from "../../../components/OnRampTransaction";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../../lib/auth";
+import { redirect } from "next/navigation";
 
 async function getBalance() {
     const session = await getServerSession(authOptions);
+    if (!session?.user?.id) {
+        return {
+            amount: 0,
+            locked: 0
+        };
+    }
     const balance = await prisma.balance.findFirst({
         where: {
-            userId: Number(session?.user?.id)
+            userId: Number(session.user.id)
         }
     });
     return {
@@ -20,9 +27,12 @@ async function getBalance() {
 
 async function getOnRampTransactions() {
     const session = await getServerSession(authOptions);
+    if (!session?.user?.id) {
+        return [];
+    }
     const txns = await prisma.onRampTransaction.findMany({
         where: {
-            userId: Number(session?.user?.id)
+            userId: Number(session.user.id)
         }
     });
     return txns.map(t => ({
@@ -34,6 +44,11 @@ async function getOnRampTransactions() {
 }
 
 export default async function() {
+    const session = await getServerSession(authOptions);
+    if (!session?.user) {
+        redirect('/api/auth/signin');
+    }
+
     const balance = await getBalance();
     const transactions = await getOnRampTransactions();
 
