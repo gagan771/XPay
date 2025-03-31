@@ -13,6 +13,6 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts"
-  ],
+, "../../packages/ui/src/select.tsx", "../../packages/ui/src/TextInput.tsx", "../../packages/ui/src/center.tsx"  ],
   "exclude": ["node_modules"]
 }
