@@ -82,11 +82,31 @@ graph TD
 ## Project Structure
 
 ```
+├── apps/
+│   ├── bank_webhook_handler/    # Bank webhook processing service
+│   │   ├── src/                # Source code
+│   │   └── package.json        # Service dependencies
+│   ├── user-app/               # User-facing Next.js application
+│   │   ├── app/               # Next.js app directory
+│   │   ├── api/               # API routes
+│   │   └── package.json       # App dependencies
+│   └── merchant-app/          # Merchant dashboard application
+│       ├── app/               # Next.js app directory
+│       ├── api/               # API routes
+│       └── package.json       # App dependencies
 ├── packages/
-│   ├── db/                 # Database package with Prisma
-│   ├── ui/                 # Shared UI components
-│   └── web/               # Next.js web application
-├── package.json
+│   ├── db/                    # Database package with Prisma
+│   │   ├── prisma/           # Database schema and migrations
+│   │   └── src/              # Database utilities
+│   ├── ui/                   # Shared UI components
+│   │   ├── components/       # Reusable components
+│   │   └── styles/          # Global styles
+│   └── web/                 # Shared web utilities
+│       ├── api/             # Shared API utilities
+│       └── lib/             # Common functions
+├── package.json             # Root package.json
+├── turbo.json              # Turborepo configuration
+├── tsconfig.json           # TypeScript configuration
 └── README.md
 ```
 
@@ -149,22 +169,6 @@ The application uses the following main models:
 - **OnRampTransaction**: Manages on-ramp transactions
 - **Merchant**: Stores merchant information
 
-## Development
-
-### Running Tests
-```bash
-npm run test
-```
-
-### Building for Production
-```bash
-npm run build
-```
-
-### Starting Production Server
-```bash
-npm start
-```
 
 ## Troubleshooting
 
